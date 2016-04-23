@@ -53,12 +53,14 @@ class Paypal
 
 	// #2.
 	$curlHandler = curl_init();
-	curl_setopt($curlHandler, CURLOPT_URL, "https://api.sandbox.paypal.com/v1/payments/payment");
+	curl_setopt($curlHandler, CURLOPT_URL, "https://api.sandbox.paypal.com/v1/oauth2/token?grant_type=client_credentials");
 	curl_setopt($curlHandler, CURLOPT_HTTPHEADER, array(
-		'Content-Type:application/json', 
-		'Authorization: Bearer Aep0J5tIKzbtAbF8mnifYf7e2yKQtrb8FQu41yk0jrSRaiR_hhUgSjUVvs9Pb2Cx0vUOJSa6Phh5lcYD:EE-m6m7FGwbJD3wv3i-ZI4DMx1bGh-n50FSAn7YX9k_hVpRdtUVhQhhiReBEhyGlugd2MmhC_tFekuyX'
+		'Accept:application/json', 
+		'Accept-Language: en_US',
 		));
+	curl_setopt($curlHandler, CURLOPT_USERPWD, 'Aep0J5tIKzbtAbF8mnifYf7e2yKQtrb8FQu41yk0jrSRaiR_hhUgSjUVvs9Pb2Cx0vUOJSa6Phh5lcYD:EE-m6m7FGwbJD3wv3i-ZI4DMx1bGh-n50FSAn7YX9k_hVpRdtUVhQhhiReBEhyGlugd2MmhC_tFekuyX');
 
+	$accessToken = curl_exec($curlHandler);
 
 	return $accessToken;
 }
