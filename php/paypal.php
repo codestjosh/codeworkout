@@ -33,34 +33,43 @@ class Paypal
 						)
 					)
 				)
-			)
+			),
 			'transactions' => array(
 				array(
 					'amount' => array(
         				'total' => '7.47',
         				'currency' => 'USD',
-        				'details' => (
+        				'details' => array(
           					'subtotal' => '7.41',
 					        'tax' => '0.03',
 					        'shipping' => '0.03'
         				)
-      				)
+      				),
       				'description' => 'This is the payment transaction description.'
 				)
 			)
-		)
-	}
+		);
 
 	// #2.
 	$curlHandler = curl_init();
-	curl_setopt($curlHandler, CURLOPT_URL, "https://api.sandbox.paypal.com/v1/oauth2/token?grant_type=client_credentials");
+	curl_setopt($curlHandler, CURLOPT_URL, "https://api.sandbox.paypal.com/v1/oauth2/token");
+	curl_setopt($curlHandler, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($curlHandler, CURLOPT_HTTPHEADER, array(
 		'Accept:application/json', 
 		'Accept-Language: en_US',
 		));
 	curl_setopt($curlHandler, CURLOPT_USERPWD, 'Aep0J5tIKzbtAbF8mnifYf7e2yKQtrb8FQu41yk0jrSRaiR_hhUgSjUVvs9Pb2Cx0vUOJSa6Phh5lcYD:EE-m6m7FGwbJD3wv3i-ZI4DMx1bGh-n50FSAn7YX9k_hVpRdtUVhQhhiReBEhyGlugd2MmhC_tFekuyX');
+	curl_setopt($curlHandler, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
 
 	$accessToken = curl_exec($curlHandler);
-
-	return $accessToken;
+	curl_close($curlHandler);
+	
+	// #3.
+	print_r($accessToken);
+	}
 }
+
+
+
+$paypalObject = new Paypal;
+$paypalObject->getAccessToken();
